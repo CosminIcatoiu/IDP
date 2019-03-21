@@ -8,4 +8,4 @@ RUN pip install requests
 
 EXPOSE 80
 
-CMD python3 client.py $ip_app
+CMD python3 client.py $ip_service
