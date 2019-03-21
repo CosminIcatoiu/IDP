@@ -1,0 +1,49 @@
+version: "2"
+services:
+  db:
+    networks:
+        test:
+    image: mysql:5.7
+    ports:
+      - "32000:3306"
+    container_name: betting_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d/:rw
+      - mysql_db:/var/lib/mysql
+  client:
+    networks:
+        test:
+    build: ./client
+    ports:
+      - "4002:80"
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    networks:
+      test:
+    environment:
+     - PMA_HOST=db
+     - PM_PORT=3306
+    restart: always
+    ports:
+     - 8080:80
+    volumes:
+     - /sessions
+    links:
+     - db
+  service:
+    networks:
+        test:
+    build: ./service
+    links:
+      - db
+      - phpmyadmin
+    ports:
+      - "4001:80"
+networks:
+  test:
+    driver: bridge
+volumes:
+  mysql_db:
