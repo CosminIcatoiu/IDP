@@ -15,7 +15,7 @@ services:
   client:
     networks:
         test:
-    build: ./client
+    image: cosminvi/idp-client
     ports:
       - "4002:80"
   phpmyadmin:
@@ -36,7 +36,7 @@ services:
   service:
     networks:
         test:
-    build: ./service
+    image: cosminvi/idp-service
     links:
       - db
       - phpmyadmin
