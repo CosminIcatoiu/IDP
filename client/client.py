@@ -101,6 +101,7 @@ if __name__ == "__main__":
                     req += "&matches=" + match
 
                 req += "&bets=" + bets[match]
+                index += 1
             req += "&money=" + str(money)
 
             r = requests.get(req)
